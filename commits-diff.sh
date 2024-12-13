@@ -1,9 +1,18 @@
 #!/bin/bash
 
-source .env
+if [[ ! -d ./lib/ ]]; then
+  mkdir "lib"
+fi
 
 if [[ ! -f ./lib/selector.sh ]]; then
   echo "Installing dependencies..."
+
+  source .env
+  if [[ -z $SELECTOR_URL ]]; then
+    echo "ERROR: .env variable 'SELECTOR_URL' not found"
+    exit 1
+  fi
+
   wget -O "./lib/selector.sh" "$SELECTOR_URL"
 fi
 
